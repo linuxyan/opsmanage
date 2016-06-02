@@ -29,7 +29,6 @@
                             <th>地址</th>
                             <th>库名</th>
                             <th>帐号</th>
-                            <th>密码</th>
                             <th>节点</th>
                             <th>操作</th>
                         </tr>
@@ -42,8 +41,13 @@
                             <td>{{db_item.dburl}}</td>
                             <td>{{db_item.dbname}}</td>
                             <td>{{db_item.dbuser}}</td>
-                            <td>{{db_item.dbpass}}</td>
-                            <td>{{db_item.node}}</td>
+                            {%  if db_item.node == "杭州节点" %}
+                                <td><a href="http://hznode.rdops.top/?username={{ username }}">{{db_item.node}}</a></td>
+                            {% elif db_item.node == "青岛节点" %}
+                                <td><a href="http://qdnode.rdops.top/?username={{ username }}">{{db_item.node}}</a></td>
+                            {% elif db_item.node == "金融云" %}
+                                <td><a href="http://jrynode.rdops.top/?username={{ username }}">{{db_item.node}}</a></td>
+                            {% endif %}
                             <td>
                                 <button name="db_delete" type="button" class="btn btn-dange" onclick="db_delete({{ db_item.id }});">删除</button>
                             </td>

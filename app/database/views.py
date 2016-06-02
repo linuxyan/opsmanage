@@ -26,7 +26,7 @@ def dblist(page=1):
                 for db_id in user_db_list:
                     db_id_list.append(db_id[1])
                 db_all = dbs.query.filter(and_(dbs.id.in_(db_id_list),or_(dbs.name.ilike('%%%s%%' %search_txt),dbs.dbname.ilike('%%%s%%' %search_txt)))).paginate(page,Config.POSTS_PER_PAGE,False)
-            return render_template('dblist.html',db_all=db_all)
+            return render_template('dblist.html',db_all=db_all,username=current_user.username)
         elif operation =='db_delete':
             if current_user.role == '0':
                 db_id = request.form['db_id']
@@ -45,7 +45,7 @@ def dblist(page=1):
             for db_id in user_db_list:
                 db_id_list.append(db_id[1])
             db_all = dbs.query.filter(dbs.id.in_(db_id_list)).paginate(page,Config.POSTS_PER_PAGE,False)
-        return render_template('dblist.html',db_all=db_all)
+        return render_template('dblist.html',db_all=db_all,username=current_user.username)
 
 @database.route('/userdb/<int:userid>', methods=['GET','POST'])
 @login_required
