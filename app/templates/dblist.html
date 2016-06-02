@@ -42,11 +42,11 @@
                             <td>{{db_item.dbname}}</td>
                             <td>{{db_item.dbuser}}</td>
                             {%  if db_item.node == "杭州节点" %}
-                                <td><a href="http://hznode.rdops.top/?username={{ username }}">{{db_item.node}}</a></td>
+                                <td><a target="_blank" href="http://hznode.rdops.top/?username={{ username }}"><font color="blue">{{db_item.node}}</font></a></td>
                             {% elif db_item.node == "青岛节点" %}
-                                <td><a href="http://qdnode.rdops.top/?username={{ username }}">{{db_item.node}}</a></td>
+                                <td><a target="_blank" href="http://qdnode.rdops.top/?username={{ username }}"><font color="blue">{{db_item.node}}</font></a></td>
                             {% elif db_item.node == "金融云" %}
-                                <td><a href="http://jrynode.rdops.top/?username={{ username }}">{{db_item.node}}</a></td>
+                                <td><a target="_blank" href="http://jrynode.rdops.top/?username={{ username }}"><font color="blue">{{db_item.node}}</font></a></td>
                             {% endif %}
                             <td>
                                 <button name="db_delete" type="button" class="btn btn-dange" onclick="db_delete({{ db_item.id }});">删除</button>
