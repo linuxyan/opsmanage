@@ -1,0 +1,96 @@
+ {% extends "base.html" %}
+ {% block title %}数据库管理{% endblock %}
+ {% block content %}
+            <div class="main-middle">
+                <div class="middle-top">
+                    <div class="middle-left">
+                        <h2>数据库管理<small>DataBase  management </small></h2>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-4 col-sm-4 btn-right">
+                        <form class="form-search" method="post">
+                        <div class="input-group">
+                            <input name="operation" value="search" style="display:none">
+                            <input name="search_text" type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button type="submit"  class="btn btn-warning">
+                                        搜索
+                                    </button>
+                                </span>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="liucheng">
+                    <table class="table table-striped ">
+                        <thead>
+                        <tr class="title">
+                            <th>ID</th>
+                            <th>名称</th>
+                            <th>地址</th>
+                            <th>库名</th>
+                            <th>帐号</th>
+                            <th>密码</th>
+                            <th>节点</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for db_item in db_all.items %}
+                        <tr>
+                            <td>{{db_item.id }}</td>
+                            <td>{{db_item.name}}</td>
+                            <td>{{db_item.dburl}}</td>
+                            <td>{{db_item.dbname}}</td>
+                            <td>{{db_item.dbuser}}</td>
+                            <td>{{db_item.dbpass}}</td>
+                            <td>{{db_item.node}}</td>
+                            <td>
+                                <button name="db_delete" type="button" class="btn btn-dange" onclick="db_delete({{ db_item.id }});">删除</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="fen">
+                    <ul class="pagination pagination-md">
+                        {% if db_all.has_prev  %}
+                        <li><a href="{{ url_for('database.dblist', page = db_all.prev_num) }}">前一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>前一页</a></li>
+                        {% endif %}
+
+                        {% if  db_all.has_next %}
+                        <li><a href="{{ url_for('database.dblist', page = db_all.next_num  ) }}">后一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>后一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <script>
+			$('.lite .vtitle').eq(2).addClass('active').siblings().removeClass('active');
+            $('.lite .vtitle').eq(2).find('li').eq(0).addClass('active1').siblings().removeClass('active1');
+            //数据库删除
+            function db_delete(db_id) {
+                var status = confirm("确认删除该数据库信息么?");
+                if(!status){
+                    return false;
+                }
+                $.ajax({
+                    type:'POST',
+                    dataType:'text',
+                    data:{
+                        operation:'db_delete',
+                        db_id:db_id
+                    },
+                    success:function(data){
+                        alert(data);
+                        location.reload();
+                    }
+                });
+            }
+			</script>
+   {% endblock %}
+

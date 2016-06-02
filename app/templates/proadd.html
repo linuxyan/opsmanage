@@ -1,0 +1,124 @@
+ {% extends "base.html" %}
+  {% block title %}添加项目{% endblock %}
+ {% block content %}
+            <div class="main-middle">
+                <div class="middle-top">
+                    <div class="middle-left">
+                        <!--<img src="images/intruduct.png" alt=""/>-->
+                        <h2>添加项目<small>Add the project</small></h2>
+                    </div>
+                </div>
+                <div class="liucheng add">
+                    {% for message in get_flashed_messages() %}
+                      <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+
+                    <form method="POST" class="form-horizontal" role="form">
+                        {{form.hidden_tag()}}
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">项目名称：</label>
+                            <div class="col-sm-7">
+                                {{form.proname(type="text",class="form-control")}}
+                                {% for error in form.errors.proname %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">项目域名：</label>
+                            <div class="col-sm-7">
+                                {{form.prodomain(type="text",class="form-control")}}
+                                {% for error in form.errors.prodomain %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">项目路径：</label>
+                            <div class="col-sm-7">
+                                {{form.propath(type="text",class="form-control")}}
+                                {% for error in form.errors.propath %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">项目类型：</label>
+                            <div class="col-sm-7">
+                                {{form.protype(type="text",class="form-control")}}
+                                {% for error in form.errors.protype %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Tomcat路径：</label>
+                            <div class="col-sm-7">
+                                {{form.tomcatpath(type="text",class="form-control",placeholder="/usr/local/tomcat 无需/")}}
+                                {% for error in form.errors.tomcatpath %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">svn路径：</label>
+                            <div class="col-sm-7">
+                                {{form.svnurl(type="text",class="form-control")}}
+                                {% for error in form.errors.svnurl %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">svn账号：</label>
+                            <div class="col-sm-7">
+                                {{form.svnuser(type="text",class="form-control")}}
+                                {% for error in form.errors.svnuser %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">svn密码：</label>
+                            <div class="col-sm-7">
+                                {{form.svnpass(type="text",class="form-control")}}
+                                {% for error in form.errors.svnpass %}
+                                <span style="color: red;">[{{error}}]</span>
+                                {% endfor %}<br>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">所属服务器：</label>
+                            <div class="col-sm-7">
+                                <select id="select_host" name="select_host" class="form-control">
+                                    {% for host in hosts %}
+                                    <option value="{{ host.hostip }}">{{ host.hostname }}</option>
+                                    {% endfor %}
+                                </select>
+                                <br>
+                            </div>
+                        </div>
+                    <button type="submit" class="btn btn-primary">添加项目</button>
+                    </form>
+
+                </div>
+            </div>
+            <script>
+			$('.lite .vtitle').eq(1).addClass('active').siblings().removeClass('active');
+			$('.lite .vtitle').eq(1).find('li').eq(1).addClass('active1').siblings().removeClass('active1');
+			</script>
+   {% endblock %}

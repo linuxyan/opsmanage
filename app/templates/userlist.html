@@ -1,0 +1,104 @@
+ {% extends "base.html" %}
+ {% block title %}用户管理{% endblock %}
+ {% block content %}
+            <div class="main-middle">
+                <div class="middle-top">
+                    <div class="middle-left">
+                        <!--<img src="images/intruduct.png" alt=""/>-->
+                        <h2>用户管理<small>User  management </small></h2>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-4 col-sm-4 btn-right">
+                        <div class="input-group">
+                            <input id="search_text" type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button id="search_btn" class="btn btn-warning" type="button">
+                                        搜索
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="liucheng">
+                    <table class="table table-striped ">
+                        <thead>
+                        <tr class="title">
+                            <th>ID</th>
+                            <th>用户名</th>
+                            <th>姓名</th>
+                            <th>邮箱</th>
+                            <th>角色</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users.items %}
+                        <tr>
+                            <td class="user-id">{{ user.id }}</td>
+                            <td class="user-username">{{user.username}}</td>
+                            <td class="user-name">{{user.name}}</td>
+                            <td>{{user.useremail}}</td>
+                            {% if user.role == '0' %}
+                            <td>管理员</td>
+                            {% else %}
+                            <td>普通用户</td>
+                            {% endif %}
+                            <td>
+                                <button type="button" class="btn btn-info"><a href="{{ url_for('main.userpro',userid=user.id) }}">WEB授权</a></button>
+                                <button type="button" class="btn btn-info"><a href="{{ url_for('database.userdb',userid=user.id) }}">DB授权</a></button>
+                                <button type="button" class="btn btn-danger userdel" user-id="{{ user.id }}" user-username="{{user.username}}" user-name="{{user.name}}">删除</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="fen">
+                    <ul class="pagination pagination-md">
+                        {% if users.has_prev  %}
+                        <li><a href="{{ url_for('main.userlist', page = users.prev_num) }}">前一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>前一页</a></li>
+                        {% endif %}
+
+                        {% if  users.has_next %}
+                        <li><a href="{{ url_for('main.userlist', page = users.next_num  ) }}">后一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>后一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <!-- 删除模态框（Modal） -->
+                <div class="modols usermodol">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            删除
+                        </h4>
+                    </div>
+                    <div class="modal-middle">
+                        <div class="detel">
+                            <ul>
+                                <li class="username"><span>用户名：<font>11</font></span></li>
+                                <li class="name"><span>姓名：<font></font></span></li>
+                            </ul>
+                            <div class="delete">
+                                <input type="hidden" id="userId">
+                               <button type="button" class="btn btn-danger usersure">确定删除</button>
+                               <button type="button" class="btn btn-default cancel">取消</button>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 删除模态框（Modal） -->
+            </div>
+            <script>
+			$('.lite .vtitle').eq(3).addClass('active').siblings().removeClass('active');
+			$('.lite .vtitle').eq(3).find('li').eq(0).addClass('active1').siblings().removeClass('active1');
+			</script>
+   {% endblock %}
+

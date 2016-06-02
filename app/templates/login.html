@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <script src="static/js/bootstrap.min.js"></script>
+    <title>融都科技项目管理系统</title>
+</head>
+<body>
+    <div id="container">
+        <div class="login">
+            <div class="mleft">
+                <div class="logo"></div>
+            </div>
+            <div class="mright">
+                <div class="loginbox">
+                    <span>用户登录<font>The user login </font></span>
+                    <form method="POST"  class="form-horizontal" role="form">
+                        {{form.hidden_tag()}}
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">用户名</label>
+                            <div class="col-sm-9">
+                                {{form.username(type="text",class="form-control",id="firstname",placeholder="请输入用户名")}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-sm-3 control-label">密码</label>
+                            <div class="col-sm-9">
+                                {{form.password(type="password",class="form-control",id="inputPassword",placeholder="请输入密码")}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        {{form.remember_me() }} 记住我
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">登录</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

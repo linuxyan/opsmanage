@@ -1,0 +1,40 @@
+ {% extends "base.html" %}
+ {% block title %}用户数据库授权{% endblock %}
+ {% block content %}
+
+            <div class="main-middle">
+                <div class="middle-top">
+                    <div class="middle-left">
+                        <h2>数据库授权<small>Authorization</small></h2>
+                    </div>
+                </div>
+
+                <div class="liucheng">
+                    <div class="selectbox">
+                        <div class="select-bar">
+                        <p>未授权数据库</p>
+                            <select multiple="multiple" id="select1" size="8">
+                                {% for db_item in  All_db%}
+                                    <option value="{{ db_item.id }}">{{ db_item.name }}-{{ db_item.dbname }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="btn-bar">
+                            <span id="add"><button type="button" class="btn btn-info" value=">">></button></span><br />
+                            <span id="add_all"><button type="button" class="btn btn-success" value=">>">>></button></span><br />
+                            <span id="remove"><button type="button" class="btn btn-info" value="<"><</button></span><br />
+                            <span id="remove_all"><button type="button" class="btn btn-success" value="<<"><<</button></span>
+                        </div>
+                        <div class="select-bar">
+                        <p>已授权数据库</p>
+                            <select multiple="multiple" id="select2" size="8">
+                                {% for db_item in  User_db%}
+			                        <option value="{{ db_item.id }}">{{ db_item.name }}-{{ db_item.dbname }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="button" id="submit_user_db" class="btn btn-primary">确定更新</button>
+                    </div>
+                </div>
+            </div>
+   {% endblock %}

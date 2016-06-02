@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <script src="/static/js/jquery.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="/static/js/tab.js"></script>
+    <script src="/static/js/layer/layer.js"></script>
+    <title>融都科技项目管理系统</title>
+</head>
+<body>
+<!--头部header部分begin-->
+<div class="header">
+    <ul>
+        <li class="nav1"><span><img src="/static/images/logo-small.png" alt=""/>融都科技 | 项目管理</span></li>
+        <li class="nav2">
+            <div class="user">
+                <!--<img src="/static/images/touxiang.png" alt=""/>-->
+                <span>{{ current_user.username }}</span>
+            </div>
+        </li>
+        <li class="nav5 hidden-xs"><span><a href="{{ url_for('auth.logout') }}">退出</a></span></li>
+    </ul>
+</div>
+<!--头部header部分end-->
+
+<div id="main">
+    <div class="main-container">
+        <!--main部分左边begin-->
+        <div class="main-left col-md-2">
+            <div class="slide">|&nbsp;|&nbsp;|</div>
+            <div class="lite">
+                <div class="vtitle active"><span class="btn1"><a href="{{ url_for('main.index') }}">首页</a></span></div>
+                <div class="vtitle"><span class="btn2">项目管理<i class="roowbg"></i></span>
+                    <ul class="vconlist clearfix">
+                        <li><a href="{{ url_for('main.prolist') }}">项目列表</a></li>
+                        {% if current_user.role == '0' %}
+                        <li><a href="{{ url_for('main.proadd') }}">添加项目</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="vtitle"><span class="btn4">数据库管理<i class="roowbg"></i></span>
+                    <ul class="vconlist clearfix">
+                        <li><a href="{{ url_for('database.dblist') }}">数据库列表</a></li>
+                        {% if current_user.role == '0' %}
+                        <li><a href="{{ url_for('database.dbadd') }}">添加数据库</a></li>
+                         {% endif %}
+                    </ul>
+                </div>
+                {% if current_user.role == '0' %}
+                <div class="vtitle"><span class="btn3">用户管理<i class="roowbg"></i></span>
+                    <ul class="vconlist clearfix">
+                        <li><a href="{{ url_for('main.userlist') }}">用户列表</a></li>
+                        <li><a href="{{ url_for('main.useradd') }}">添加用户</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if current_user.role == '0' %}
+                <div class="vtitle"><span class="btn5">服务器管理<i class="roowbg"></i></span>
+                    <ul class="vconlist clearfix">
+                        <li><a href="{{ url_for('main.hostlist') }}">服务器列表</a></li>
+                        <li><a href="{{ url_for('main.hostadd') }}">添加服务器</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="vtitle"><span class="btn5">用户中心<i class="roowbg"></i></span>
+                    <ul class="vconlist clearfix">
+                        <li><a href="{{ url_for('auth.upuser',userid=current_user.id) }}">修改密码</a></li>
+                    </ul>
+                </div>
+               <!-- <div class="vtitle"><span class="btn6"><a href="index.html">退出</a></span></div>-->
+            </div>
+        </div>
+        <!--main部分左边end-->
+       
+        <!--main部分右边begin-->
+        <div class="main-right col-md-10">
+            <div class="main-top">
+                <div class="zl">
+                    <h3>你的位置：<span><a href="#">{% block title %}>首页{% endblock %}</a></span></h3>
+                </div>
+                <div class="zr">
+                    <h3 id="nowTime"></h3>
+                </div>
+            </div>
+	        {% block content %}{% endblock %}
+        <!--main部分右边end-->
+        </div>
+    </div>
+</div>    
+</body>
+</html>

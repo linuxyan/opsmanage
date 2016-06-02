@@ -1,0 +1,98 @@
+ {% extends "base.html" %}
+ {% block title %}服务器列表{% endblock %}
+ {% block content %}
+            <div class="main-middle">
+                <div class="middle-top">
+                    <div class="middle-left">
+                        <h2>服务器管理<small>Server management</small></h2>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-4 col-sm-4 btn-right">
+                        <div class="input-group">
+                            <input id="search_text"  type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button id="search_btn"  class="btn btn-warning" type="button">
+                                        搜索
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="liucheng">
+                    <table class="table table-striped " id="hostlist_tab">
+                        <thead>
+                        <tr class="title">
+                            <th>ID</th>
+                            <th>服务器名称</th>
+                            <th>IP</th>
+                            <th>用户</th>
+                            <th>端口</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for host in hosts.items %}
+                        <tr class="host_body">
+                            <td class="host-id">{{ host.id }}</td>
+                            <td class="host-hostname">{{ host.hostname }}</td>
+                            <td class="host-hostip">{{ host.hostip }}</td>
+                            <td>{{ host.hostuser }}</td>
+                            <td>{{ host.hostport }}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger valide-btn" host-id="{{ host.id }}" >验证</button>
+                               
+                                <button type="button" class="btn btn-danger del deleteBtn" host-id="{{ host.id }}" host-hostname="{{ host.hostname }}" host-hostip="{{ host.hostip }}">删除</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="fen">
+                    <ul class="pagination pagination-md">
+                        {% if hosts.has_prev  %}
+                        <li><a href="{{ url_for('main.hostlist', page = hosts.prev_num) }}">前一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>前一页</a></li>
+                        {% endif %}
+
+                        {% if  hosts.has_next %}
+                        <li><a href="{{ url_for('main.hostlist', page = hosts.next_num  ) }}">后一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>后一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <!-- 删除模态框（Modal） -->
+                <div class="modols">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            删除
+                        </h4>
+                    </div>
+                    <div class="modal-middle">
+                        <div class="detel">
+                            <ul>
+                                <li class="de1"><span>服务器名称：<font></font></span></li>
+                                <li class="de2"><span>IP：<font></font></span></li>
+                                <li id="zhu"><span>注：删除服务器同时会删除该服务器上所有的项目记录！</span></li>
+                            </ul>
+                            <div class="delete">
+                                <input type="hidden" id="currentId">
+                               <button type="button" class="btn btn-danger sure" >确定删除</button>
+                               <button type="button" class="btn btn-default cancel">取消</button>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 删除模态框（Modal） -->
+            </div>
+            <script>
+			$('.lite .vtitle').eq(4).addClass('active').siblings().removeClass('active');
+			$('.lite .vtitle').eq(4).find('li').eq(0).addClass('active1').siblings().removeClass('active1');
+			</script>
+   {% endblock %}

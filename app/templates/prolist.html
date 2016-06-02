@@ -1,0 +1,175 @@
+ {% extends "base.html" %}
+ {% block title %}项目管理{% endblock %}
+ {% block content %}
+            <div class="main-middle">
+                <div class="middle-top">
+                    <div class="middle-left hidden-xs">
+                        <!--<img src="images/intruduct.png" alt=""/>-->
+                        <h2>项目管理<small>The  project  management </small></h2>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-4 col-sm-4 btn-right">
+                        <form class="form-search" method="post">
+                        <div class="input-group">
+                            <input name="operation" value="search" style="display:none">
+                            <input name="search_text" type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button type="submit"  class="btn btn-warning">
+                                        搜索
+                                    </button>
+                                </span>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="liucheng">
+                    <table class="table table-striped z_i">
+                        <thead>
+                        <tr class="title">
+                            <th>ID</th>
+                            <th>项目名称</th>
+                            <th>IP</th>
+                            <th>域名</th>
+                            <th>版本库</th>
+                            <th>版本号 </th>
+                            <th>产品类别</th>
+                            <th>操作 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pro in pros.items %}
+                        <tr>
+                            <td class="pro-id">{{ pro.id }}</td>
+                            <td class="pro-name">{{ pro.proname }}</td>
+                            <td class="host-ip">{{ pro.host_ip }}</td>
+                            <td class="pro-domain"><a target="_blank" href="{{ pro.prodomain }}">{{ pro.prodomain }}</a></td>
+                            <td>{{ pro.svnurl.split('/')[-1] }}</td>
+                            <td>{{ pro.svnver }}</td>
+                            <td>{{ pro.protype }}</td>
+                            <td>
+                            	<!-- <input type="hidden" id="pronewId"> -->
+                                <button type="button" class="btn btn-primary new" pro-id="{{ pro.id }}">更新</button>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-success btn-primary dropdown-toggle" data-toggle="dropdown">服务<span class="caret"></span></button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li role="presentation" id="stop">
+                                            <a role="menuitem" tabindex="-1" href="#">关闭</a>
+                                        </li>
+                                        <li role="presentation" id="start">
+                                            <a role="menuitem" tabindex="-1" href="#">启动</a>
+                                        </li>
+                                        <li role="presentation" id="restart">
+                                            <a role="menuitem" tabindex="-1" href="#">
+                                                重启
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {% if current_user.role == '0' %}
+                                <button type="button" class="btn btn-danger del" pro-id="{{ pro.id }}" pro-name="{{ pro.proname }}" host-ip="{{ pro.host_ip }}" pro-domain="{{ pro.prodomain }}">删除</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="fen">
+                    <ul class="pagination pagination-md">
+                        {% if pros.has_prev  %}
+                        <li><a href="{{ url_for('main.prolist', page = pros.prev_num) }}">前一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>前一页</a></li>
+                        {% endif %}
+
+                        {% if  pros.has_next %}
+                        <li><a href="{{ url_for('main.prolist', page = pros.next_num  ) }}">后一页</a></li>
+                        {% else %}
+                        <li class="disabled"><a>后一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- 更新模态框（Modal） -->
+                <div class="modol newload">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            更新
+                        </h4>
+                    </div>
+                    <div class="modal-middle">
+                        <ul>
+                            <li class="edition">输入版本号：<input type="text" class="form-control" id="up_version" placeholder="请输入版本号"></li>
+                            <li class="current"><span>当前版本：</span><font></font></li>
+                            <li class="Onone"><span>上个版本：</span><font></font></li>
+                            <li>
+                                <input type="hidden" id="NewId">
+                                <button type="button" class="btn btn-primary news">确定</button>
+                                <button type="button" class="btn btn-default cancel">取消</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modol1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            更新日志
+                        </h4>
+                    </div>
+                    <div class="modal-middle">
+                        <ul class="visions">
+                            <li></li>
+                            <!-- <li>当前版本： V1234567890</li>
+                            <li>当前版本： V1234567890</li>
+                            <li>当前版本： V1234567890</li> -->
+                        </ul>
+                        <div class="btne">
+                            <div class="auto">
+                                <button type="button" class="btn btn-primary new1">确定</button>
+                                <button type="button" class="btn btn-default cancel">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 更新模态框（Modal） -->
+                <!-- 删除模态框（Modal） -->
+                <div class="modols productdel">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            删除
+                        </h4>
+                    </div>
+                    <div class="modal-middle">
+                        <div class="detel">
+                            <ul>
+                                <li class="prode1"><span>项目名称：<font>VXX平台</font></span></li>
+                                <li class="prode2"><span>所属服务器IP：<font>1.1.1.1</font></span></li>
+                                <li class="prode3"><span>网站域名：<font>www.xxxx.com</font></span></li>
+                            </ul>
+                            <div class="delete">
+                               <input type="hidden" id="proId">
+                               <button type="button" class="btn btn-danger suredel">确定删除</button>
+                               <button type="button" class="btn btn-default cancel">取消</button>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 删除模态框（Modal） -->
+                </div>
+            </div>
+            <script>
+			$('.lite .vtitle').eq(1).addClass('active').siblings().removeClass('active');
+			$('.lite .vtitle').eq(1).find('li').eq(0).addClass('active1').siblings().removeClass('active1');
+			</script>
+  {% endblock %}
