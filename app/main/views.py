@@ -325,7 +325,7 @@ def dbapi():
                 db_id_list = db.session.query(user_db).filter_by(user_id=user.id).all()
                 db_list = dbs.query.filter(dbs.id.in_(db_id_list)).all()
             else:
-                db_list = dbs.query.order_by(pros.id).all()
+                db_list = dbs.query.order_by(dbs.id).all()
             for db_item in db_list:
                 data_list[db_item.name] = db_item.id
             data['dblist'] = data_list
