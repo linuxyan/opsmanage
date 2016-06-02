@@ -307,8 +307,7 @@ def userpro(userid):
     else:
         User_Pro = users.query.filter_by(id=userid).first().pros
         pros_all = pros.query.order_by(pros.id.desc()).all()
-        for pro in pros_all:
-            if pro in User_Pro:
+        for pro in User_Pro:
                 pros_all.remove(pro)
         return render_template('user_pro.html',User_Pro=User_Pro,All_Pro=pros_all)
 
